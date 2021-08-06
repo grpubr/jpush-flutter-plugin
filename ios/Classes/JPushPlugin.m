@@ -45,6 +45,7 @@ static NSMutableArray<FlutterResult>* getRidResults;
     
     [registrar addApplicationDelegate:instance];
     [registrar addMethodCallDelegate:instance channel:channel];
+    [registrar publish:instance];
 }
 
 - (id)init {

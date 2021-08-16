@@ -36,7 +36,7 @@ public class JPushPlugin implements FlutterPlugin, MethodCallHandler {
 
     public static JPushPlugin instance;
 
-    static List<Map<String, Object>> openNotificationCache = new ArrayList<>();
+    public static List<Map<String, Object>> openNotificationCache = new ArrayList<>();
 
     private boolean dartIsReady = false;
     private boolean jpushDidinit = false;

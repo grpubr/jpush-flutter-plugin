@@ -208,7 +208,7 @@ public class JPushPlugin implements FlutterPlugin, MethodCallHandler {
     }
 
     private String getRid(){
-        if(Build.BOARD.equalsIgnoreCase("HUAWEI")){
+        if(Build.BRAND.equalsIgnoreCase("HUAWEI")){
             return huaweiToken;
         }
         return  JPushInterface.getRegistrationID(context);

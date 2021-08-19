@@ -3,6 +3,7 @@ package com.jiguang.jpush;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -167,7 +168,6 @@ public class JPushPlugin implements FlutterPlugin, MethodCallHandler {
 
     public void scheduleCache() {
         Log.d(TAG, "scheduleCache:");
-
         List<Object> tempList = new ArrayList<Object>();
 
         if (dartIsReady) {
@@ -185,7 +185,7 @@ public class JPushPlugin implements FlutterPlugin, MethodCallHandler {
             return;
         }
 
-        String rid = JPushInterface.getRegistrationID(context);
+        String rid = getRid();
         boolean ridAvailable = rid != null && !rid.isEmpty();
         if (ridAvailable && dartIsReady) {
             // try to schedule get rid cache
@@ -198,6 +198,20 @@ public class JPushPlugin implements FlutterPlugin, MethodCallHandler {
             }
             resultList.removeAll(tempList);
         }
+    }
+
+    public String huaweiToken="";
+
+    public void setHuaweiToken(String huaweiToken){
+        this.huaweiToken = huaweiToken;
+        this.scheduleCache();
+    }
+
+    private String getRid(){
+        if(Build.BOARD.equalsIgnoreCase("HUAWEI")){
+            return huaweiToken;
+        }
+        return  JPushInterface.getRegistrationID(context);
     }
 
     public void setTags(MethodCall call, Result result) {
@@ -304,7 +318,7 @@ public class JPushPlugin implements FlutterPlugin, MethodCallHandler {
             return;
         }
 
-        String rid = JPushInterface.getRegistrationID(context);
+        String rid = getRid();
         if (rid == null || rid.isEmpty()) {
             getRidCache.add(result);
         } else {
